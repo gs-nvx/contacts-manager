@@ -75,7 +75,7 @@ Il disaccoppiamento garantisce che un eventuale down del processor non impatti l
 | Database relazionale | MySQL 8.x                                 |
 | Migration schema     | Liquibase                                 |
 | Message broker       | RabbitMQ 3.x                              |
-| Search engine        | Elasticsearch 8.15                        |
+| Search engine        | Elasticsearch 9.2.2                       |
 | Backend Search       | Spring Data Elasticsearch                 |
 | Documentazione API   | SpringDoc OpenAPI (Swagger UI)            |
 | Monitoring           | Spring Boot Actuator                      |
@@ -178,8 +178,6 @@ contacts-project/
 
 ### 1. Clona il repository
 
-//TODO: caricare codice su git
-
 ```bash
 git clone <url-repository>
 cd contacts-project
@@ -231,8 +229,6 @@ docker compose down -v
 ## Configurazione
 
 ### Variabili d'ambiente principali
-
-//TODO: impostare sugli application.yaml le variabili di ambiente
 
 Le variabili d'ambiente nel `docker-compose.yml` sovrascrivono i valori in `application.yml` (Spring Boot Externalized Configuration — 12-Factor App).
 
