@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: contacts-search-processor
+
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+
+  elasticsearch:
+    uris: ${SPRING_ELASTICSEARCH_URIS:http://localhost:9200}
+    username: ${SPRING_ELASTICSEARCH_USERNAME:elastic}
+    password: ${SPRING_ELASTICSEARCH_PASSWORD:elastic123}
+
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST:localhost}
+    port: ${SPRING_RABBITMQ_PORT:5672}
+    username: ${SPRING_RABBITMQ_USERNAME:admin}
+    password: ${SPRING_RABBITMQ_PASSWORD:admin123}
+
+server:
+  port: 8081
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics
+
+app:
+  rabbitmq:
+    exchange: contacts.exchange
+    routing-key:
+      created: contacts.created
+      updated: contacts.updated
+      deleted: contacts.deleted
+    queue:
+      created: contacts.queue.created
+      updated: contacts.queue.updated
+      deleted: contacts.queue.deleted

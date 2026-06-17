@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: contacts-api
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/contacts_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    username: ${SPRING_DATASOURCE_USERNAME:contacts_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:ContactsPass123!}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST:localhost}
+    port: ${SPRING_RABBITMQ_PORT:5672}
+    username: ${SPRING_RABBITMQ_USERNAME:admin}
+    password: ${SPRING_RABBITMQ_PASSWORD:admin123}
+    connection-timeout: 5000
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+
+app:
+  jwt:
+    secret: ${APP_JWT_SECRET:ZmFrZS1zZWNyZXQta2V5LXBlci1zdmlsdXBwby1jb250YWN0cy1hcGktcHJvZ2V0dG8tY29sbG9xdWlv}
+    expiration-ms: ${APP_JWT_EXPIRATION_MS:3600000}
+  rabbitmq:
+    exchange: contacts.exchange
+    routing-key:
+      created: contacts.created
+      updated: contacts.updated
+      deleted: contacts.deleted
+    queue:
+      created: contacts.queue.created
+      updated: contacts.queue.updated
+      deleted: contacts.queue.deleted

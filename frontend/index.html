@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rubrica Contatti</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --border: #2a2d3a;
+            --accent: #6c8ef5;
+            --accent-dim: #3a4f9a;
+            --text: #e2e4ed;
+            --muted: #767b85;
+            --danger: #f87171;
+            --success: #34d399;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            min-height: 100vh;
+        }
+
+        /* ── TOPBAR ── */
+        .topbar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .topbar-brand {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: .02em;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .topbar-brand .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: inline-block;
+        }
+
+        .topbar-user {
+            font-size: 13px;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+        }
+
+        /* ── LAYOUT ── */
+        .app-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: calc(100vh - 56px);
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: .25rem;
+        }
+
+        .sidebar-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding: .75rem .75rem .25rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+            padding: .55rem .75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--muted);
+            font-size: 13.5px;
+            font-weight: 450;
+            transition: background .15s, color .15s;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .nav-item:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .nav-item.active {
+            background: var(--accent-dim);
+            color: var(--accent);
+        }
+
+        .nav-item i {
+            font-size: 15px;
+            width: 18px;
+            text-align: center;
+        }
+
+        /* ── MAIN ── */
+        .main {
+            padding: 2rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* ── CARD ── */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            margin-bottom: 1rem;
+        }
+
+        /* ── LOGIN ── */
+        #loginView {
+            max-width: 400px;
+            margin: 5rem auto;
+        }
+
+        #loginView .card {
+            padding: 2rem;
+        }
+
+        .login-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: .25rem;
+        }
+
+        .login-sub {
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            font-size: 13px;
+        }
+
+        /* ── FORM CONTROLS ── */
+        .form-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--muted);
+            margin-bottom: .35rem;
+        }
+
+        .form-control,
+        .form-select {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 13.5px;
+            padding: .5rem .75rem;
+            transition: border-color .15s;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            background: var(--bg);
+            color: var(--text);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(108, 142, 245, .15);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: var(--muted);
+        }
+
+        /* ── BUTTONS ── */
+        .btn-primary {
+            background: var(--accent);
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 13.5px;
+            font-weight: 500;
+            padding: .5rem 1.1rem;
+            transition: opacity .15s;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            opacity: .85;
+        }
+
+        .btn-ghost {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--muted);
+            font-size: 13px;
+            padding: .45rem .9rem;
+            transition: border-color .15s, color .15s;
+            cursor: pointer;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-danger-ghost {
+            background: none;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            color: var(--danger);
+            font-size: 13px;
+            padding: .45rem .9rem;
+            cursor: pointer;
+            transition: background .15s;
+        }
+
+        .btn-danger-ghost:hover {
+            background: rgba(248, 113, 113, .1);
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            padding: .3rem .5rem;
+            border-radius: 5px;
+            font-size: 15px;
+            transition: color .15s, background .15s;
+        }
+
+        .btn-icon:hover {
+            color: var(--text);
+            background: var(--border);
+        }
+
+        .btn-icon.danger:hover {
+            color: var(--danger);
+            background: rgba(248, 113, 113, .1);
+        }
+
+        /* ── SEARCH BAR ── */
+        .search-row {
+            display: flex;
+            gap: .75rem;
+            align-items: center;
+        }
+
+        .search-wrap {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-wrap i {
+            position: absolute;
+            left: .75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        .search-wrap input {
+            padding-left: 2.25rem;
+            width: 100%;
+        }
+
+        .search-type {
+            display: flex;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .search-type button {
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 500;
+            padding: .45rem .9rem;
+            cursor: pointer;
+            transition: background .15s, color .15s;
+        }
+
+        .search-type button.active {
+            background: var(--accent-dim);
+            color: var(--accent);
+        }
+
+        /* ── TABLE ── */
+        .contacts-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .contacts-table thead th {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding: .6rem 1rem;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .contacts-table tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background .1s;
+        }
+
+        .contacts-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .contacts-table tbody tr:hover {
+            background: rgba(108, 142, 245, .04);
+        }
+
+        .contacts-table td {
+            padding: .85rem 1rem;
+            font-size: 13.5px;
+            vertical-align: middle;
+        }
+
+        .contact-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent-dim);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .contact-name-cell {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+        }
+
+        .contact-name {
+            font-weight: 500;
+        }
+
+        .contact-sub {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 1px;
+        }
+
+        .mono {
+            font-family: 'DM Mono', monospace;
+            font-size: 12.5px;
+            color: var(--muted);
+        }
+
+        .geo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: .3rem;
+            font-size: 11.5px;
+            color: var(--muted);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: .2rem .55rem;
+            border-radius: 20px;
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: .25rem;
+            justify-content: flex-end;
+        }
+
+        /* ── PAGINATION ── */
+        .pagination-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12.5px;
+            color: var(--muted);
+            padding-top: .5rem;
+        }
+
+        .page-btns {
+            display: flex;
+            gap: .35rem;
+        }
+
+        .page-btn {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            border-radius: 5px;
+            padding: .3rem .65rem;
+            font-size: 12px;
+            cursor: pointer;
+            transition: border-color .15s, color .15s;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .page-btn:disabled {
+            opacity: .35;
+            cursor: not-allowed;
+        }
+
+        .page-btn.active {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ── MODAL ── */
+        .modal-backdrop-custom {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .6);
+            backdrop-filter: blur(2px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.75rem;
+            width: 520px;
+            max-width: 95vw;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header-custom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .modal-title-custom {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-size: 20px;
+            cursor: pointer;
+            line-height: 1;
+            transition: color .15s;
+        }
+
+        .modal-close:hover {
+            color: var(--text);
+        }
+
+        .modal-footer-custom {
+            display: flex;
+            justify-content: flex-end;
+            gap: .75rem;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: .9rem;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-divider {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin: 1rem 0 .75rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ── EMPTY / LOADING ── */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: var(--muted);
+        }
+
+        .empty-state i {
+            font-size: 2.5rem;
+            margin-bottom: .75rem;
+            display: block;
+            opacity: .4;
+        }
+
+        .empty-state p {
+            font-size: 13px;
+        }
+
+        /* ── TOAST ── */
+        #toastContainer {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+        }
+
+        .toast-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: .75rem 1rem;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .4);
+            animation: slideIn .2s ease;
+            min-width: 240px;
+        }
+
+        .toast-item.success {
+            border-left: 3px solid var(--success);
+        }
+
+        .toast-item.error {
+            border-left: 3px solid var(--danger);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* ── STATS ── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: .35rem;
+        }
+
+        .stat-accent {
+            color: var(--accent);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════════════════════
+     LOGIN
+════════════════════════════════════════════════════ -->
+    <div id="loginView">
+        <div class="card">
+            <p class="login-title">Rubrica Contatti</p>
+            <p class="login-sub">Accedi per gestire i tuoi contatti</p>
+            <div class="form-group">
+                <label class="form-label">Username</label>
+                <input type="text" id="loginUsername" class="form-control" placeholder="admin" />
+            </div>
+            <div class="form-group" style="margin-top:.75rem">
+                <label class="form-label">Password</label>
+                <input type="password" id="loginPassword" class="form-control" placeholder="••••••••"
+                    onkeydown="if(event.key==='Enter') login()" />
+            </div>
+            <div id="loginError" style="color:var(--danger);font-size:12px;margin-top:.5rem;display:none"></div>
+            <button class="btn-primary" style="width:100%;margin-top:1.25rem" onclick="login()">
+                <i class="bi bi-box-arrow-in-right"></i> Accedi
+            </button>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+     APP
+════════════════════════════════════════════════════ -->
+    <div id="appView" style="display:none">
+
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="topbar-brand">
+                <span class="dot"></span>
+                Rubrica Contatti
+            </div>
+            <div class="topbar-user">
+                <span id="topbarUsername"></span>
+                <button class="btn-ghost" onclick="logout()">
+                    <i class="bi bi-box-arrow-right"></i> Esci
+                </button>
+            </div>
+        </div>
+
+        <div class="app-layout">
+
+            <!-- Sidebar -->
+            <nav class="sidebar">
+                <div class="sidebar-label">Menu</div>
+                <button class="nav-item active" onclick="showView('contacts')">
+                    <i class="bi bi-people"></i> Contatti
+                </button>
+                <button class="nav-item" onclick="showView('search')">
+                    <i class="bi bi-search"></i> Ricerca
+                </button>
+                <button class="nav-item" onclick="showView('stats')">
+                    <i class="bi bi-bar-chart"></i> Statistiche
+                </button>
+            </nav>
+
+            <!-- Main -->
+            <main class="main">
+
+                <!-- ── CONTACTS VIEW ── -->
+                <div id="viewContacts">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+                        <div>
+                            <div style="font-size:18px;font-weight:600">Contatti</div>
+                            <div style="font-size:12px;color:var(--muted);margin-top:2px">Gestisci la rubrica</div>
+                        </div>
+                        <button class="btn-primary" onclick="openModal()">
+                            <i class="bi bi-plus"></i> Nuovo contatto
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <div class="search-row" style="margin-bottom:1rem">
+                            <div class="search-wrap">
+                                <i class="bi bi-search"></i>
+                                <input type="text" class="form-control" id="quickSearch"
+                                    placeholder="Filtra per nome o cognome…" oninput="onQuickSearch()" />
+                            </div>
+                        </div>
+
+                        <table class="contacts-table">
+                            <thead>
+                                <tr>
+                                    <th>Contatto</th>
+                                    <th>Telefono</th>
+                                    <th>Indirizzo</th>
+                                    <th>Coordinate</th>
+                                    <th style="text-align:right">Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contactsBody">
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="empty-state"><i class="bi bi-hourglass-split"></i>
+                                            <p>Caricamento…</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="pagination-row" id="paginationRow" style="display:none">
+                            <span id="paginationInfo"></span>
+                            <div class="page-btns" id="paginationBtns"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── SEARCH VIEW ── -->
+                <div id="viewSearch" style="display:none">
+                    <div style="font-size:18px;font-weight:600;margin-bottom:.25rem">Ricerca avanzata</div>
+                    <div style="font-size:12px;color:var(--muted);margin-bottom:1.25rem">Full-text su Elasticsearch o
+                        match esatto per telefono</div>
+
+                    <div class="card">
+                        <div class="search-row" style="margin-bottom:1rem">
+                            <div class="search-type">
+                                <button id="btnFullText" class="active" onclick="setSearchType('fulltext')">
+                                    <i class="bi bi-text-paragraph"></i> Full-text
+                                </button>
+                                <button id="btnExact" onclick="setSearchType('phone')">
+                                    <i class="bi bi-telephone"></i> Telefono esatto
+                                </button>
+                            </div>
+                            <div class="search-wrap" style="flex:1">
+                                <i class="bi bi-search"></i>
+                                <input type="text" class="form-control" id="searchInput" placeholder="Cerca…"
+                                    onkeydown="if(event.key==='Enter') doSearch()" />
+                            </div>
+                            <button class="btn-primary" onclick="doSearch()">Cerca</button>
+                        </div>
+
+                        <table class="contacts-table">
+                            <thead>
+                                <tr>
+                                    <th>Contatto</th>
+                                    <th>Telefono</th>
+                                    <th>Indirizzo</th>
+                                    <th>Altre info</th>
+                                </tr>
+                            </thead>
+                            <tbody id="searchBody">
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="empty-state"><i class="bi bi-search"></i>
+                                            <p>Inserisci un termine per cercare</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ── STATS VIEW ── -->
+                <div id="viewStats" style="display:none">
+                    <div style="font-size:18px;font-weight:600;margin-bottom:1.25rem">Statistiche</div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value stat-accent" id="statTotal">—</div>
+                            <div class="stat-label">Contatti totali</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="statWithGeo" style="color:var(--success)">—</div>
+                            <div class="stat-label">Con coordinate geografiche</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="statWithInfo" style="color:var(--muted)">—</div>
+                            <div class="stat-label">Con note aggiuntive</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:1rem">
+                        <button class="btn-ghost" onclick="loadStats()">
+                            <i class="bi bi-arrow-clockwise"></i> Aggiorna
+                        </button>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+     MODAL CONTATTO
+════════════════════════════════════════════════════ -->
+    <div id="contactModal" class="modal-backdrop-custom" style="display:none" onclick="closeModalOnBackdrop(event)">
+        <div class="modal-box">
+            <div class="modal-header-custom">
+                <div class="modal-title-custom" id="modalTitle">Nuovo contatto</div>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+
+            <input type="hidden" id="modalId" />
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Cognome *</label>
+                    <input type="text" id="fSurname" class="form-control" placeholder="Rossi" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nome *</label>
+                    <input type="text" id="fName" class="form-control" placeholder="Mario" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Telefono *</label>
+                <input type="text" id="fPhone" class="form-control" placeholder="+39 333 1234567" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Indirizzo</label>
+                <input type="text" id="fAddress" class="form-control" placeholder="Via Roma 1, Milano" />
+            </div>
+
+            <div class="section-divider">Coordinate geografiche</div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Latitudine</label>
+                    <input type="number" id="fLat" class="form-control" placeholder="45.4642" step="any" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Longitudine</label>
+                    <input type="number" id="fLon" class="form-control" placeholder="9.1900" step="any" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Note aggiuntive</label>
+                <input type="text" id="fOther" class="form-control" placeholder="Cliente storico, fornitore…" />
+            </div>
+
+            <div id="modalError" style="color:var(--danger);font-size:12px;margin-top:.5rem;display:none"></div>
+
+            <div class="modal-footer-custom">
+                <button class="btn-ghost" onclick="closeModal()">Annulla</button>
+                <button class="btn-primary" onclick="saveContact()">
+                    <i class="bi bi-check2"></i> Salva
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════
+     CONFIRM DELETE MODAL
+════════════════════════════════════════════════════ -->
+    <div id="deleteModal" class="modal-backdrop-custom" style="display:none">
+        <div class="modal-box" style="width:380px">
+            <div class="modal-header-custom">
+                <div class="modal-title-custom">Elimina contatto</div>
+                <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
+            </div>
+            <p style="color:var(--muted);font-size:13px">
+                Sei sicuro di voler eliminare <strong id="deleteContactName" style="color:var(--text)"></strong>?
+                L'operazione non è reversibile.
+            </p>
+            <div class="modal-footer-custom">
+                <button class="btn-ghost" onclick="closeDeleteModal()">Annulla</button>
+                <button class="btn-danger-ghost" onclick="confirmDelete()">
+                    <i class="bi bi-trash3"></i> Elimina
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast container -->
+    <div id="toastContainer"></div>
+
+    <!-- ═══════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════ -->
+    <script>
+        const API = 'http://localhost:8080/api/v1';
+        const SEARCH = 'http://localhost:8081/api/v1/search';
+
+        let token = null;
+        let currentPage = 0;
+        let totalPages = 0;
+        let searchType = 'fulltext';
+        let deleteId = null;
+        let allContacts = []; // cache per il filtro rapido
+
+        // ── AUTH ──────────────────────────────────────────
+        async function login() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const errEl = document.getElementById('loginError');
+            errEl.style.display = 'none';
+
+            try {
+                const res = await fetch(`${API}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                if (!res.ok) throw new Error('Credenziali non valide');
+                const data = await res.json();
+                token = data.token;
+                document.getElementById('topbarUsername').textContent = username;
+                document.getElementById('loginView').style.display = 'none';
+                document.getElementById('appView').style.display = 'block';
+                loadContacts(0);
+            } catch (e) {
+                errEl.textContent = e.message;
+                errEl.style.display = 'block';
+            }
+        }
+
+        function logout() {
+            token = null;
+            document.getElementById('appView').style.display = 'none';
+            document.getElementById('loginView').style.display = 'block';
+            document.getElementById('loginPassword').value = '';
+        }
+
+        function authHeaders() {
+            return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
+        }
+
+        // ── NAVIGATION ────────────────────────────────────
+        function showView(name) {
+            ['contacts', 'search', 'stats'].forEach(v => {
+                document.getElementById('view' + v.charAt(0).toUpperCase() + v.slice(1)).style.display = 'none';
+            });
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            document.getElementById('view' + name.charAt(0).toUpperCase() + name.slice(1)).style.display = '';
+            event.currentTarget.classList.add('active');
+            if (name === 'stats') loadStats();
+        }
+
+        // ── LOAD CONTACTS ─────────────────────────────────
+        async function loadContacts(page = 0) {
+            try {
+                const res = await fetch(`${API}/contacts?page=${page}&size=10&sort=surname`, {
+                    headers: authHeaders()
+                });
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+                allContacts = data.content;
+                totalPages = data.totalPages;
+                currentPage = data.number;
+                renderTable(allContacts);
+                renderPagination(data);
+            } catch {
+                showToast('Errore nel caricamento dei contatti', 'error');
+            }
+        }
+
+        function renderTable(contacts) {
+            const body = document.getElementById('contactsBody');
+            if (!contacts.length) {
+                body.innerHTML = `<tr><td colspan="5"><div class="empty-state">
+      <i class="bi bi-person-x"></i><p>Nessun contatto trovato</p></div></td></tr>`;
+                return;
+            }
+            body.innerHTML = contacts.map(c => `
+    <tr>
+      <td>
+        <div class="contact-name-cell">
+          <div class="contact-avatar">${initials(c.surname, c.name)}</div>
+          <div>
+            <div class="contact-name">${esc(c.surname)} ${esc(c.name)}</div>
+            ${c.otherInfo ? `<div class="contact-sub">${esc(c.otherInfo)}</div>` : ''}
+          </div>
+        </div>
+      </td>
+      <td><span class="mono">${esc(c.phoneNumber)}</span></td>
+      <td style="color:var(--muted)">${esc(c.address || '—')}</td>
+      <td>
+        ${c.geodata?.latitude != null
+                    ? `<span class="geo-badge"><i class="bi bi-geo-alt"></i>
+             ${c.geodata.latitude.toFixed(4)}, ${c.geodata.longitude.toFixed(4)}</span>`
+                    : `<span style="color:var(--muted)">—</span>`}
+      </td>
+      <td>
+        <div class="actions-cell">
+          <button class="btn-icon" title="Modifica" onclick="editContact(${c.id})">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn-icon danger" title="Elimina" onclick="openDeleteModal(${c.id},'${esc(c.surname)} ${esc(c.name)}')">
+            <i class="bi bi-trash3"></i>
+          </button>
+        </div>
+      </td>
+    </tr>`).join('');
+        }
+
+        function renderPagination(data) {
+            const row = document.getElementById('paginationRow');
+            const info = document.getElementById('paginationInfo');
+            const btns = document.getElementById('paginationBtns');
+            if (data.totalElements === 0) { row.style.display = 'none'; return; }
+            row.style.display = 'flex';
+            info.textContent = `${data.totalElements} contatti — pagina ${data.number + 1} di ${data.totalPages}`;
+            const pages = Math.min(data.totalPages, 7);
+            let html = `<button class="page-btn" onclick="loadContacts(${currentPage - 1})" ${currentPage === 0 ? 'disabled' : ''}>
+                <i class="bi bi-chevron-left"></i></button>`;
+            for (let i = 0; i < pages; i++) {
+                html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="loadContacts(${i})">${i + 1}</button>`;
+            }
+            html += `<button class="page-btn" onclick="loadContacts(${currentPage + 1})" ${currentPage >= totalPages - 1 ? 'disabled' : ''}>
+             <i class="bi bi-chevron-right"></i></button>`;
+            btns.innerHTML = html;
+        }
+
+        // ── QUICK FILTER (client-side) ────────────────────
+        function onQuickSearch() {
+            const term = document.getElementById('quickSearch').value.toLowerCase();
+            if (!term) { renderTable(allContacts); return; }
+            renderTable(allContacts.filter(c =>
+                c.surname.toLowerCase().includes(term) || c.name.toLowerCase().includes(term)
+            ));
+        }
+
+        // ── MODAL CRUD ────────────────────────────────────
+        function openModal(contact = null) {
+            document.getElementById('modalTitle').textContent = contact ? 'Modifica contatto' : 'Nuovo contatto';
+            document.getElementById('modalId').value = contact?.id ?? '';
+            document.getElementById('fSurname').value = contact?.surname ?? '';
+            document.getElementById('fName').value = contact?.name ?? '';
+            document.getElementById('fPhone').value = contact?.phoneNumber ?? '';
+            document.getElementById('fAddress').value = contact?.address ?? '';
+            document.getElementById('fLat').value = contact?.geodata?.latitude ?? '';
+            document.getElementById('fLon').value = contact?.geodata?.longitude ?? '';
+            document.getElementById('fOther').value = contact?.otherInfo ?? '';
+            document.getElementById('modalError').style.display = 'none';
+            document.getElementById('contactModal').style.display = 'flex';
+        }
+
+        function closeModal() { document.getElementById('contactModal').style.display = 'none'; }
+        function closeModalOnBackdrop(e) { if (e.target === e.currentTarget) closeModal(); }
+
+        async function editContact(id) {
+            try {
+                const res = await fetch(`${API}/contacts/${id}`, { headers: authHeaders() });
+                const c = await res.json();
+                openModal(c);
+            } catch { showToast('Errore nel caricamento del contatto', 'error'); }
+        }
+
+        async function saveContact() {
+            const id = document.getElementById('modalId').value;
+            const errEl = document.getElementById('modalError');
+            errEl.style.display = 'none';
+
+            const lat = document.getElementById('fLat').value;
+            const lon = document.getElementById('fLon').value;
+
+            const body = {
+                surname: document.getElementById('fSurname').value.trim(),
+                name: document.getElementById('fName').value.trim(),
+                phoneNumber: document.getElementById('fPhone').value.trim(),
+                address: document.getElementById('fAddress').value.trim() || null,
+                otherInfo: document.getElementById('fOther').value.trim() || null,
+                geodata: (lat && lon) ? { latitude: parseFloat(lat), longitude: parseFloat(lon) } : null
+            };
+
+            if (!body.surname || !body.name || !body.phoneNumber) {
+                errEl.textContent = 'Cognome, nome e telefono sono obbligatori';
+                errEl.style.display = 'block';
+                return;
+            }
+
+            try {
+                const res = await fetch(id ? `${API}/contacts/${id}` : `${API}/contacts`, {
+                    method: id ? 'PUT' : 'POST',
+                    headers: authHeaders(),
+                    body: JSON.stringify(body)
+                });
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.message || 'Errore nel salvataggio');
+                }
+                closeModal();
+                loadContacts(currentPage);
+                showToast(id ? 'Contatto aggiornato' : 'Contatto creato', 'success');
+            } catch (e) {
+                errEl.textContent = e.message;
+                errEl.style.display = 'block';
+            }
+        }
+
+        // ── DELETE ────────────────────────────────────────
+        function openDeleteModal(id, name) {
+            deleteId = id;
+            document.getElementById('deleteContactName').textContent = name;
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+        function closeDeleteModal() { document.getElementById('deleteModal').style.display = 'none'; }
+
+        async function confirmDelete() {
+            try {
+                await fetch(`${API}/contacts/${deleteId}`, { method: 'DELETE', headers: authHeaders() });
+                closeDeleteModal();
+                loadContacts(currentPage);
+                showToast('Contatto eliminato', 'success');
+            } catch { showToast('Errore durante l\'eliminazione', 'error'); }
+        }
+
+        // ── SEARCH ────────────────────────────────────────
+        function setSearchType(type) {
+            searchType = type;
+            document.getElementById('btnFullText').classList.toggle('active', type === 'fulltext');
+            document.getElementById('btnExact').classList.toggle('active', type === 'phone');
+            const ph = type === 'fulltext' ? 'Cerca per nome, cognome, indirizzo…' : '+393331234567';
+            document.getElementById('searchInput').placeholder = ph;
+        }
+
+        async function doSearch() {
+            const term = document.getElementById('searchInput').value.trim();
+            const body = document.getElementById('searchBody');
+            if (!term) return;
+
+            body.innerHTML = `<tr><td colspan="4"><div class="empty-state">
+    <i class="bi bi-hourglass-split"></i><p>Ricerca in corso…</p></div></td></tr>`;
+
+            try {
+                const url = searchType === 'fulltext'
+                    ? `${SEARCH}?term=${encodeURIComponent(term)}`
+                    : `${SEARCH}/phone?phoneNumber=${encodeURIComponent(term)}`;
+
+                const res = await fetch(url, { headers: authHeaders() });
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+                const list = data.content ?? [];
+
+                if (!list.length) {
+                    body.innerHTML = `<tr><td colspan="4"><div class="empty-state">
+        <i class="bi bi-search"></i><p>Nessun risultato per "${esc(term)}"</p></div></td></tr>`;
+                    return;
+                }
+                body.innerHTML = list.map(c => `
+      <tr>
+        <td>
+          <div class="contact-name-cell">
+            <div class="contact-avatar">${initials(c.surname ?? '?', c.name ?? '')}</div>
+            <div class="contact-name">${esc(c.surname ?? '')} ${esc(c.name ?? '')}</div>
+          </div>
+        </td>
+        <td><span class="mono">${esc(c.phoneNumber ?? '—')}</span></td>
+        <td style="color:var(--muted)">${esc(c.address ?? '—')}</td>
+        <td style="color:var(--muted)">${esc(c.otherInfo ?? '—')}</td>
+      </tr>`).join('');
+            } catch {
+                body.innerHTML = `<tr><td colspan="4"><div class="empty-state">
+      <i class="bi bi-exclamation-circle"></i>
+      <p>Errore nella ricerca. Verifica che contacts-search-processor sia attivo.</p>
+      </div></td></tr>`;
+            }
+        }
+
+        // ── STATS ─────────────────────────────────────────
+        async function loadStats() {
+            try {
+                const res = await fetch(`${API}/contacts?size=1000`, { headers: authHeaders() });
+                const data = await res.json();
+                const all = data.content;
+                document.getElementById('statTotal').textContent = data.totalElements;
+                document.getElementById('statWithGeo').textContent = all.filter(c => c.geodata?.latitude).length;
+                document.getElementById('statWithInfo').textContent = all.filter(c => c.otherInfo).length;
+            } catch { showToast('Errore nel caricamento statistiche', 'error'); }
+        }
+
+        // ── UTILS ─────────────────────────────────────────
+        function esc(str) {
+            return String(str ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function initials(surname, name) {
+            return ((surname?.[0] ?? '') + (name?.[0] ?? '')).toUpperCase();
+        }
+
+        function showToast(msg, type = 'success') {
+            const el = document.createElement('div');
+            el.className = `toast-item ${type}`;
+            el.innerHTML = `<i class="bi bi-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${msg}`;
+            document.getElementById('toastContainer').appendChild(el);
+            setTimeout(() => el.remove(), 3500);
+        }
+    </script>
+
+</body>
+
+</html>
