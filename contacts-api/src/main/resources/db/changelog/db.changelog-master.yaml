@@ -1,4 +1,4 @@
-#databaseChangeLog:
-#  - include:
-#      file: db/changelog/changes/001-create-contacts-table.yaml
-#      relativeToChangelogFile: false
+databaseChangeLog:
+  - include:
+      file: changes/001-create-contacts-table.yaml
+      relativeToChangelogFile: true
